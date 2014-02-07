@@ -1,0 +1,1042 @@
+import pygame
+import random
+import os
+from pygame.locals import *
+import math
+import sys
+import time
+import datetime
+import webbrowser
+
+
+_image_library = {}
+def get_image(path):
+        global _image_library
+        image = _image_library.get(path)
+        if image == None:
+                canonicalized_path = path.replace('/', os.sep).replace('\\', os.sep)
+                image = pygame.image.load(canonicalized_path)
+                _image_library[path] = image
+        return image
+
+def pos_decider(t_pos, val_pos, t_dict):
+    for e in t_dict:
+            if e == t_pos:
+                    e = val_pos
+            else:
+                    e = (1000, 1000)
+    return 0
+
+
+
+# Define some colors
+black    = (   0,   0,   0)
+white    = ( 255, 255, 255)
+green    = (   0, 255,   0)
+red      = ( 255,   0,   0)
+grey1    = ( 100, 100, 100)
+yellow = (255, 255, 0)
+orange = (255, 128, 100)
+
+pygame.init()
+pygame.font.init 
+screen = pygame.display.set_mode((800, 800))
+counter = 0
+done = False
+
+# controls occurrence of script
+cuberand = 30
+
+# controls occurrence of script
+scriptrand = 30
+
+#clock score
+black = (0,0,0)
+score = 0
+font = pygame.font.SysFont("arialms", 50)
+
+enter_space = 20
+position = 0
+posx = 0
+posy = 0
+#intro variables
+grey_base = ( 220, 220, 220)
+grey_fin = ( 100, 100, 100)
+grey_fin_two = ( 80, 80, 80)
+
+pygame.init()
+#sound effects
+script_effect = pygame.mixer.Sound("sfx\page_flip.ogg")
+crash_effect = pygame.mixer.Sound("sfx\paper_bag.ogg")
+intro_mus = pygame.mixer.Sound("sfx\intromus.ogg")
+
+#plane variables
+green_plane = pygame.transform.scale(pygame.image.load("images\Green.png").convert_alpha(), (126, 180))
+green_plane_two = pygame.transform.rotate(green_plane, 45)
+green_plane_three = pygame.transform.rotate(green_plane, 90)
+green_plane_four = pygame.transform.rotate(green_plane, 135)
+green_plane_five = pygame.transform.rotate(green_plane, 180)
+green_plane_six = pygame.transform.rotate(green_plane, 225)
+green_plane_seven = pygame.transform.rotate(green_plane, 270)
+green_plane_eight = pygame.transform.rotate(green_plane, 315)
+
+red_plane = pygame.transform.scale(pygame.image.load("images\Red.png").convert_alpha(), (126, 180))
+red_plane_two = pygame.transform.rotate(red_plane, 45)
+red_plane_three = pygame.transform.rotate(red_plane, 90)
+red_plane_four = pygame.transform.rotate(red_plane, 135)
+red_plane_five = pygame.transform.rotate(red_plane, 180)
+red_plane_six = pygame.transform.rotate(red_plane, 225)
+red_plane_seven = pygame.transform.rotate(red_plane, 270)
+red_plane_eight = pygame.transform.rotate(red_plane, 315)
+
+blue_plane = pygame.transform.scale(pygame.image.load("images\Blue.png").convert_alpha(), (126, 180))
+blue_plane_two = pygame.transform.rotate(blue_plane, 45)
+blue_plane_three = pygame.transform.rotate(blue_plane, 90)
+blue_plane_four = pygame.transform.rotate(blue_plane, 135)
+blue_plane_five = pygame.transform.rotate(blue_plane, 180)
+blue_plane_six = pygame.transform.rotate(blue_plane, 225)
+blue_plane_seven = pygame.transform.rotate(blue_plane, 270)
+blue_plane_eight = pygame.transform.rotate(blue_plane, 315)
+
+grey_plane = pygame.transform.scale(pygame.image.load("images\Grey.png").convert_alpha(), (126, 180))
+grey_plane_two = pygame.transform.rotate(grey_plane, 45)
+grey_plane_three = pygame.transform.rotate(grey_plane, 90)
+grey_plane_four = pygame.transform.rotate(grey_plane, 135)
+grey_plane_five = pygame.transform.rotate(grey_plane, 180)
+grey_plane_six = pygame.transform.rotate(grey_plane, 225)
+grey_plane_seven = pygame.transform.rotate(grey_plane, 270)
+grey_plane_eight = pygame.transform.rotate(grey_plane, 315)
+
+#intro planes
+
+start = pygame.image.load('images\start_button.png')
+
+intro_blue = pygame.image.load('images\IntroBlue.png')
+intro_blue = pygame.transform.scale(intro_blue, (700, 400))
+
+intro_green = pygame.image.load('images\IntroGreen.png')
+intro_green = pygame.transform.scale(intro_green, (700, 400))
+
+intro_red = pygame.image.load('images\IntroRed.png')
+intro_red = pygame.transform.scale(intro_red, (700, 400))
+
+intro_grey = pygame.image.load('images\IntroGrey.png')
+intro_grey = pygame.transform.scale(intro_grey, (700, 400))
+
+intro_plane = intro_grey
+
+plane_img = grey_plane
+plane_img_two = grey_plane_two
+plane_img_three = grey_plane_three
+plane_img_four = grey_plane_four
+plane_img_five = grey_plane_five
+plane_img_six = grey_plane_six
+plane_img_seven = grey_plane_seven
+plane_img_eight = grey_plane_eight
+
+pygame.display.update()
+
+cubeimage = pygame.image.load('images\cube.png').convert_alpha()
+scriptimage = pygame.image.load('images\script.png').convert_alpha()
+mainoctimage = pygame.image.load('images\octpic.png').convert_alpha()
+back = pygame.image.load('back.png').convert()
+
+clock = pygame.time.Clock()
+x = [10,10,10,10,10,10,10,10,10]
+flag = [1,0,0,0,0,0,0,0,0,0]
+cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+black = (0,0,0)
+intro_text = 1
+start_test = 1
+start_test_two = 1
+start_test_three = 1
+start_test_four = 1
+
+#lives
+lives = 5
+
+#instructions
+
+instruct_one = pygame.image.load("instruct1.png").convert_alpha()
+instruct_one = pygame.transform.scale(instruct_one, (800, 300))
+instruct_two = pygame.image.load("instruct2.png").convert_alpha()
+
+
+
+
+#start_screen backgrounds
+hover_play = pygame.image.load("play_back.png").convert()
+hover_play = pygame.transform.scale(hover_play, (800, 800))
+
+hover_inst = pygame.image.load("inst_back.png").convert_alpha()
+hover_inst = pygame.transform.scale(hover_inst, (800, 800))
+
+hover_score = pygame.image.load("score_back.png").convert_alpha()
+hover_score = pygame.transform.scale(hover_score, (800, 800))
+
+default = pygame.image.load("default_back.png").convert_alpha()
+default = pygame.transform.scale(default, (800, 800))
+
+while enter_space == 20:
+    clock.tick(60)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            enter_space == 0
+        if event.type == KEYDOWN:
+            if event.key == K_f:
+                enter_space = 0
+    mouse_pos = pygame.mouse.get_pos()
+    
+    if event.type == pygame.MOUSEBUTTONUP:
+            if mouse_pos[0] >= 358 and mouse_pos[0] <= 439 and mouse_pos[1] >= 507 and mouse_pos[1] <= 535:
+                    enter_space = 1
+            elif mouse_pos[0] >= 285 and mouse_pos[0] <= 499 and mouse_pos[1] >= 568 and mouse_pos[1] <= 589:
+                enter_space = 15
+            elif mouse_pos[0] >= 294 and mouse_pos[0] <= 495 and mouse_pos[1] >= 613 and mouse_pos[1] <= 640:
+                enter_space = 10
+            else:
+                screen.blit(default, (0,0))
+
+    if mouse_pos[0] >= 358 and mouse_pos[0] <= 439 and mouse_pos[1] >= 507 and mouse_pos[1] <= 535:
+            screen.blit(hover_play, (0, 0))
+    elif mouse_pos[0] >= 285 and mouse_pos[0] <= 499 and mouse_pos[1] >= 568 and mouse_pos[1] <= 589:
+            screen.blit(hover_inst, (0, 0))
+    elif mouse_pos[0] >= 294 and mouse_pos[0] <= 495 and mouse_pos[1] >= 613 and mouse_pos[1] <= 640:
+            screen.blit(hover_score, (0, 0))
+    else:
+            screen.blit(default, (0,0))
+    
+    intro_mus.play()
+    pygame.display.flip()
+
+while enter_space == 15:
+    clock.tick(60)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            enter_space == 0
+        if event.type == KEYDOWN:
+            if event.key == K_f:
+                enter_space = 0
+    if event.type == pygame.MOUSEBUTTONDOWN:
+            if mouse_pos[0] >= 0 and mouse_pos[0] <= 800 and mouse_pos[1] >= 0 and mouse_pos[1] <= 800:
+                    enter_space = 20
+        
+    intro_mus.play()
+    screen.fill(white)
+    screen.blit(instruct_one, (0,0))
+    screen.blit(instruct_two, (0,400))
+    pygame.display.flip()
+
+
+if enter_space == 10:
+        webbrowser.open('http://www.teencomputing.com/tej20pcss/joe/ventor/ventorh.php')
+        enter_space = 20
+        
+        
+
+
+while enter_space == 1:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            enter_space == 0
+        if event.type == KEYDOWN:
+            if event.key == K_f:
+                enter_space = 0
+    # ALL EVENT PROCESSING SHOULD GO ABOVE THIS COMMENT
+    intro_mus.play()
+
+    if event.type == pygame.MOUSEBUTTONUP:
+            if mouse_pos[0] >= 90 and mouse_pos[0] <= 299 and mouse_pos[1] >= 82 and mouse_pos[1] <= 131:
+                    enter_space = 0
+                    intro_mus.stop()
+                    
+            if mouse_pos[0] >= 700 and mouse_pos[0] <= 800 and mouse_pos[1] >= 50 and mouse_pos[1] <= 150:
+                        intro_plane = intro_green
+                        plane_img = green_plane
+                        plane_img_two = green_plane_two
+                        plane_img_three = green_plane_three
+                        plane_img_four = green_plane_four
+                        plane_img_five = green_plane_five
+                        plane_img_six = green_plane_six
+                        plane_img_seven = green_plane_seven
+                        plane_img_eight = green_plane_eight
+
+                        
+            elif mouse_pos[0] >= 550 and mouse_pos[0] <= 650 and mouse_pos[1] >= 50 and mouse_pos[1] <= 150:
+                        intro_plane = intro_red
+                        plane_img = red_plane
+                        plane_img_two = red_plane_two
+                        plane_img_three = red_plane_three
+                        plane_img_four = red_plane_four
+                        plane_img_five = red_plane_five
+                        plane_img_six = red_plane_six
+                        plane_img_seven = red_plane_seven
+                        plane_img_eight = red_plane_eight
+                        
+                        
+            elif mouse_pos[0] >= 550 and mouse_pos[0] <= 650 and mouse_pos[1] >= 200 and mouse_pos[1] <= 300:
+                        intro_plane = intro_grey
+                        plane_img = grey_plane
+                        plane_img_two = grey_plane_two
+                        plane_img_three = grey_plane_three
+                        plane_img_four = grey_plane_four
+                        plane_img_five = grey_plane_five
+                        plane_img_six = grey_plane_six
+                        plane_img_seven = grey_plane_seven
+                        plane_img_eight = grey_plane_eight
+
+                        
+            elif mouse_pos[0] >= 700 and mouse_pos[0] <= 800 and mouse_pos[1] >= 200 and mouse_pos[1] <= 300:
+                        intro_plane = intro_blue
+                        plane_img = blue_plane
+                        plane_img_two = blue_plane_two
+                        plane_img_three = blue_plane_three
+                        plane_img_four = blue_plane_four
+                        plane_img_five = blue_plane_five
+                        plane_img_six = blue_plane_six
+                        plane_img_seven = blue_plane_seven
+                        plane_img_eight = blue_plane_eight
+                            
+
+    mouse_button = pygame.mouse.get_pressed()
+    mouse_pos = pygame.mouse.get_pos()
+        
+    
+    screen.fill(white)
+
+    screen.blit(intro_plane, (50, 300))
+    screen.blit(start, (50, 50))
+
+    green_circle_outline = pygame.draw.circle(screen, (255,255,255), (740,100), 51)     
+    green_circle = pygame.draw.circle(screen, (green), (740,100), 50)
+
+    red_circle_outline = pygame.draw.circle(screen, (255,255,255), (600,100), 51)           
+    red_circle = pygame.draw.circle(screen, (red), (600,100), 50)
+
+    blue_circle_outline = pygame.draw.circle(screen, (255,255,255), (740,250), 51)
+    blue_circle = pygame.draw.circle(screen, (0, 0, 255), (740,250), 50)
+
+    white_circle_outline = pygame.draw.circle(screen, (255,255,255), (600,250), 51)
+    white_circle = pygame.draw.circle(screen, (200, 200,200), (600,250), 50)
+
+    pygame.display.flip()
+     # Go ahead and update the screen with what we've drawn.
+
+    
+# Close the window and quit.
+# If you forget this line, the program will 'hang'
+# on exit if running from IDLE.
+
+scoreboard = 0
+test_left = 0
+test_right = 0
+start_text_test = 1
+send_data = 1
+
+#pos variables
+pos_dict = {'one' : (342.5, 600), 'two' : (1000, 1000), 'three' : (1000, 1000), 'four' : (1000, 1000), 'five' : (1000, 1000), 'six' : (1000, 1000), 'seven' : (1000, 1000), 'eight' : (1000, 1000)}
+
+while not done:
+        for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                        done = True
+
+        for i in range(9):
+                if flag[i] == 1:
+                        x[i] += x[i]//10
+                        if x[i] > 950:
+                                x[i] = 10
+                                flag[i] = 0
+                                if i == 0 or i == 3 or i == 6:
+                                        for k in range(8):
+                                                cubeflag[i//3][k] = random.randint(0,2)
+                                                if cubeflag[i//3][k] == 0:
+                                                        scriptflag[i//3][k] = random.randint(0,10)
+                        elif x[i] > 16:
+                                flag[(i+1)%9] = 1
+        escape = True
+        ex = 0
+        if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    if escape == False:
+                        tickspeed=1
+                        escape =True
+                    elif escape == True:
+                        tickspeed=30
+                        escape=False
+                if event.key == pygame.K_p:
+                        event = pygame.event.wait()
+                        if event.type == KEYUP:
+                                if event.key == pygame.K_p:
+                                        pygame.event.wait()
+                                if event.type == KEYDOWN:
+                                        if event.key == pygame.K_p:
+                                                break
+                if event.key == pygame.K_q:
+                        lives = 0
+                if event.key ==  K_KP8 and tickspeed<200 and escape == False:
+                    tickspeed=tickspeed*2
+                if event.key == K_KP5 and tickspeed>20 and escape == False:
+                    tickspeed=tickspeed/2
+
+                if event.key == K_LEFT:
+                        test_left = 1
+                                                
+                if event.key == K_RIGHT:
+                        test_right = 1
+                                                
+        elif event.type == KEYUP:
+                if event.key == K_ESCAPE:
+                    tickspeed=tickspeed
+                elif event.key ==  K_KP8 or event.key == K_KP5:
+                    tickspeed=tickspeed
+                if event.key == K_LEFT and test_left == 1:
+                        test_left = 0
+                        position = (position + 1)%8
+                if event.key == K_RIGHT and test_right == 1:
+                        test_right = 0
+                        position = (position - 1)%8
+        
+                
+
+                      
+        screen.fill((255, 255, 255))
+        screen.blit(back, (0,0))
+
+        if position == 0:
+                pos_dict = {'one' : (342.5, 600), 'two' : (1000, 1000), 'three' : (1000, 1000), 'four' : (1000, 1000), 'five' : (1000, 1000), 'six' : (1000, 1000), 'seven' : (1000, 1000), 'eight' : (1000, 1000)}
+        elif position == 7:
+                pos_dict = {'one' : (1000, 1000), 'two' : (495, 495), 'three' : (1000, 1000), 'four' : (1000, 1000), 'five' : (1000, 1000), 'six' : (1000, 1000), 'seven' : (1000, 1000), 'eight' : (1000, 1000)}                
+        elif position == 6:
+                pos_dict = {'one' : (1000, 1000), 'two' : (1000, 1000), 'three' : (600, 345), 'four' : (1000, 1000), 'five' : (1000, 1000), 'six' : (1000, 1000), 'seven' : (1000, 1000), 'eight' : (1000, 1000)}                
+        elif position == 5:
+                pos_dict = {'one' : (1000, 1000), 'two' : (1000, 1000), 'three' : (1000, 1000), 'four' : (500, 89), 'five' : (1000, 1000), 'six' : (1000, 1000), 'seven' : (1000, 1000), 'eight' : (1000, 1000)}                
+        elif position == 4:
+                pos_dict = {'one' : (1000, 1000), 'two' : (1000, 1000), 'three' : (1000, 1000), 'four' : (1000, 1000), 'five' : (342.5, 24), 'six' : (1000, 1000), 'seven' : (1000, 1000), 'eight' : (1000, 1000)}
+        elif position == 3:
+                pos_dict = {'one' : (1000, 1000), 'two' : (1000, 1000), 'three' : (1000, 1000), 'four' : (1000, 1000), 'five' : (1000, 1000), 'six' : (83, 85), 'seven' : (1000, 1000), 'eight' : (1000, 1000)}
+        elif position == 2:
+                pos_dict = {'one' : (1000, 1000), 'two' : (1000, 1000), 'three' : (1000, 1000), 'four' : (1000, 1000), 'five' : (1000, 1000), 'six' : (1000, 1000), 'seven' : (24, 342.5), 'eight' : (1000, 1000)}
+        elif position == 1:
+                pos_dict = {'one' : (1000, 1000), 'two' : (1000, 1000), 'three' : (1000, 1000), 'four' : (1000, 1000), 'five' : (1000, 1000), 'six' : (1000, 1000), 'seven' : (1000, 1000), 'eight' : (80, 505)}
+
+         
+        
+        pygame.draw.aalines(screen, black, False,[(400,400),(564, 0)], 1)
+        pygame.draw.aalines(screen, black, False,[(400,400),(800, 236)], 1)
+        pygame.draw.aalines(screen, black, False,[(400,400),(800, 564)], 1)
+        pygame.draw.aalines(screen, black, False,[(400,400),(236, 800)], 1)
+        pygame.draw.aalines(screen, black, False,[(400,400),(564, 800)], 1)
+        pygame.draw.aalines(screen, black, False,[(400,400),(0, 564)], 1)
+        pygame.draw.aalines(screen, black, False,[(400,400),(0, 236)], 1)
+        pygame.draw.aalines(screen, black, False,[(400,400),(236, 0)], 1)
+        
+        
+        #the octagons
+        octimage1 = pygame.transform.scale(mainoctimage, (x[0], x[0]))
+        screen.blit(octimage1, (400-x[0]/2, 400-x[0]/2))
+
+        octimage2 = pygame.transform.scale(mainoctimage, (x[1], x[1]))
+        screen.blit(octimage2, (400-x[1]/2, 400-x[1]/2))
+
+        octimage2 = pygame.transform.scale(mainoctimage, (x[2], x[2]))
+        screen.blit(octimage2, (400-x[2]/2, 400-x[2]/2))
+
+        octimage2 = pygame.transform.scale(mainoctimage, (x[3], x[3]))
+        screen.blit(octimage2, (400-x[3]/2, 400-x[3]/2))
+
+        octimage2 = pygame.transform.scale(mainoctimage, (x[4], x[4]))
+        screen.blit(octimage2, (400-x[4]/2, 400-x[4]/2))
+
+        octimage2 = pygame.transform.scale(mainoctimage, (x[5], x[5]))
+        screen.blit(octimage2, (400-x[5]/2, 400-x[5]/2))
+
+        octimage2 = pygame.transform.scale(mainoctimage, (x[6], x[6]))
+        screen.blit(octimage2, (400-x[6]/2, 400-x[6]/2))
+
+        octimage2 = pygame.transform.scale(mainoctimage, (x[7], x[7]))
+        screen.blit(octimage2, (400-x[7]/2, 400-x[7]/2))
+
+        octimage2 = pygame.transform.scale(mainoctimage, (x[8], x[8]))
+        screen.blit(octimage2, (400-x[8]/2, 400-x[8]/2))
+
+                       
+        #the cubes
+        #m is the index
+        for m in range(3):
+                if cubeflag[m][0] == 1:
+                        image1 = pygame.transform.scale(cubeimage, (x[m*3], x[m*3]))
+                        image1 = pygame.transform.rotate(image1, 0)
+                        screen.blit(image1, (400-x[m*3]/2, 400+x[m*3]))
+                        if position == 0:
+                            if m == 0:
+                                     if 400+x[m*3] > 530 and 400+x[m*3] < 625:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             lives -= 1
+                                             position = 0
+                                             
+                            elif m == 1:
+                                     if 400+x[m*3] > 530 and 400+x[m*3] < 625:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000) 
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             
+                                             lives -= 1
+                                             position = 0
+                            elif m == 2:
+                                     if 400+x[m*3] > 530 and 400+x[m*3] < 625:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             
+                                             lives -= 1
+                                             position = 0
+                elif scriptflag[m][0] == 1:
+                        scriptimage1 = pygame.transform.scale(scriptimage, (x[m*3], x[m*3]))
+                        scriptimage1 = pygame.transform.rotate(scriptimage1, 0)
+                        screen.blit(scriptimage1, (400-x[m*3]/2, 400+x[m*3]))
+                        
+                        if position == 0:
+                            if m == 0:
+                                     if 400+x[m*3] > 550 and 400+x[m*3] < 625:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][0] = 0
+                                             
+                                            
+                            elif m == 1:
+                                     if 400+x[m*3] > 550 and 400+x[m*3] < 625:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][0] = 0
+                            elif m == 2:
+                                     if 400+x[m*3] > 550 and 400+x[m*3] < 625:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][0] = 0
+                                             
+
+                if cubeflag[m][1] == 1:
+                        image2 = pygame.transform.scale(cubeimage, (x[m*3], x[m*3]))
+                        image2 = pygame.transform.rotate(image2, 180)
+                        screen.blit(image2, (400-x[m*3]/2, 400-x[m*3]*2))
+
+                        if position == 4:
+
+                        
+                            if m == 0:
+                                     if 400+x[m*3] > 530 and 400+x[m*3] < 625:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                           
+                                             lives -= 1
+                                             position = 0
+                            elif m == 1:
+                                     if 400+x[m*3] > 530 and 400+x[m*3] < 625:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             
+                                             lives -= 1
+                                             position = 0
+                                             
+                            elif m == 2:
+                                     if 400+x[m*3] > 530 and 400+x[m*3] < 625:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             
+                                             lives -= 1
+                                             position = 0
+                        
+                elif scriptflag[m][1] == 1:
+                        scriptimage2 = pygame.transform.scale(scriptimage, (x[m*3], x[m*3]))
+                        scriptimage2 = pygame.transform.rotate(scriptimage2, 180)
+                        screen.blit(scriptimage2, (400-x[m*3]/2, 400-x[m*3]*2))
+                        
+                        if position == 4:
+
+                            if m == 0:
+                                    
+                                     if 400+x[m*3] > 550 and 400+x[m*3] < 625:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][1] = 0
+                            elif m == 1:
+                                     if 400+x[m*3] > 550 and 400+x[m*3] < 625:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][1] = 0
+                            elif m == 2:
+                                     if 400+x[m*3] > 550 and 400+x[m*3] < 625:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][1] = 0
+                if cubeflag[m][2] == 1:
+                        image3 = pygame.transform.scale(cubeimage, (x[m*3], x[m*3]))
+                        image3 = pygame.transform.rotate(image3, 90)
+                        screen.blit(image3, (400+x[m*3], 400-x[m*3]/2))
+
+                        if position == 6:
+
+                            if m == 0:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                          
+                                             lives -= 1
+                                             position = 0
+                            elif m == 1:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                        
+                                             lives -= 1
+                                             position = 0
+                            elif m == 2:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                         
+                                             lives -= 1
+                                             position = 0
+                        
+                elif scriptflag[m][2] == 1:
+                        scriptimage3 = pygame.transform.scale(scriptimage, (x[m*3], x[m*3]))
+                        scriptimage3 = pygame.transform.rotate(scriptimage3, 90)
+                        screen.blit(scriptimage3, (400+x[m*3], 400-x[m*3]/2))
+                        
+                        if position == 6:
+                        
+                            if m == 0:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][2] = 0
+                                             
+                            elif m == 1:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][2] = 0
+                            elif m == 2:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][2] = 0
+                if cubeflag[m][3] == 1:
+                        image4 = pygame.transform.scale(cubeimage, (x[m*3], x[m*3]))
+                        image4 = pygame.transform.rotate(image4, 270)
+                        screen.blit(image4, (400-x[m*3]*2, 400-x[m*3]/2))
+                        if position == 2:
+
+                        
+                            if m == 0:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                           
+                                             lives -= 1
+                                             position = 0
+                            elif m == 1:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                           
+                                             lives -= 1
+                                             position = 0
+                            elif m == 2:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                        
+                                             lives -= 1
+                                             position = 0
+                elif scriptflag[m][3] == 1:
+                        scriptimage4 = pygame.transform.scale(scriptimage, (x[m*3], x[m*3]))
+                        scriptimage4 = pygame.transform.rotate(scriptimage4, 270)
+                        screen.blit(scriptimage4, (400-x[m*3]*2, 400-x[m*3]/2))
+                        if position == 2:
+                        
+                            if m == 0:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][3] = 0
+                            elif m == 1:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][3] = 0
+                            elif m == 2:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][3] = 0
+                if cubeflag[m][4] == 1:
+                        image5 = pygame.transform.scale(cubeimage, (x[m*3], x[m*3]))
+                        image5 = pygame.transform.rotate(image5, 45)
+                        screen.blit(image5, (400+x[m*3]/2.7, 400+x[m*3]/2.7))
+
+                        if position == 7:
+
+                        
+                            if m == 0:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                          
+                                             lives -= 1
+                                             position = 0
+                            elif m == 1:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                          
+                                             lives -= 1
+                                             position = 0
+                            elif m == 2:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                           
+                                             lives -= 1
+                                             position = 0
+                        
+                elif scriptflag[m][4] == 1:
+                        scriptimage5 = pygame.transform.scale(scriptimage, (x[m*3], x[m*3]))
+                        scriptimage5 = pygame.transform.rotate(scriptimage5, 45)
+                        screen.blit(scriptimage5, (400+x[m*3]/2.7, 400+x[m*3]/2.7))
+                        
+                        if position == 7:
+
+                            if m == 0:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][4] = 0
+                            elif m == 1:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][4] = 0
+                            elif m == 2:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             scoreboard += 100
+                                             script_effect.play()
+                                             scriptflag[m][4] = 0
+                if cubeflag[m][5] == 1:
+                        image6 = pygame.transform.scale(cubeimage, (x[m*3], x[m*3]))
+                        image6 = pygame.transform.rotate(image6, 135)
+                        screen.blit(image6, (400+x[m*3]/2.7, 400-x[m*3]*1.8))
+
+                        if position == 5:
+
+                        
+                            if m == 0:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                           
+                                             lives -= 1
+                                             position = 0
+                            elif m == 1:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                           
+                                             lives -= 1
+                                             position = 0
+                            elif m == 2:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                   
+                                             lives -= 1
+                                             position = 0
+                elif scriptflag[m][5] == 1:
+                        scriptimage6 = pygame.transform.scale(scriptimage, (x[m*3], x[m*3]))
+                        scriptimage6 = pygame.transform.rotate(scriptimage6, 135)
+                        screen.blit(scriptimage6, (400+x[m*3]/2.7, 400-x[m*3]*1.8))
+
+                        if position == 5:
+                            if m == 0:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][5] = 0
+                                                                
+                            elif m == 1:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][5] = 0
+                            elif m == 2:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][5] = 0
+
+
+                if cubeflag[m][6] == 1:
+                        image7 = pygame.transform.scale(cubeimage, (x[m*3], x[m*3]))
+                        image7 = pygame.transform.rotate(image7, 225)
+                        screen.blit(image7, (400-x[m*3]*1.8, 400-x[m*3]*1.8))
+
+                        if position == 3:
+
+                        
+                            if m == 0:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                            
+                                             lives -= 1
+                                             position = 0
+                            elif m == 1:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                     
+                                             lives -= 1
+                                             position = 0
+                            elif m == 2:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                            
+                                             lives -= 1
+                                             position = 0
+                elif scriptflag[m][6] == 1:
+                        scriptimage7 = pygame.transform.scale(scriptimage, (x[m*3], x[m*3]))
+                        scriptimage7 = pygame.transform.rotate(scriptimage7, 225)
+                        screen.blit(scriptimage7, (400-x[m*3]*1.8, 400-x[m*3]*1.8))
+                        
+                        if position == 3:
+                            if m == 0:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][6] = 0
+                                             
+                            elif m == 1:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][6] = 0
+                            elif m == 2:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][6] = 0
+
+                if cubeflag[m][7] == 1:
+                        image8 = pygame.transform.scale(cubeimage, (x[m*3], x[m*3]))
+                        image8 = pygame.transform.rotate(image8, 315)
+                        screen.blit(image8, (400-x[m*3]*1.8, 400+x[m*3]/2.7))
+             
+                        if position == 1:
+
+                        
+                            if m == 0:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                        
+                                             lives -= 1
+                                             position = 0
+                            elif m == 1:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                 
+                                             lives -= 1
+                                             position = 0
+                            elif m == 2:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             crash_effect.play()
+                                             pygame.time.delay(2000)
+                                             x = [10,10,10,10,10,10,10,10,10]
+                                             flag = [1,0,0,0,0,0,0,0,0,0]
+                                             cubeflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                             scriptflag = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
+                                       
+                                             lives -= 1
+                                             position = 0
+                        
+                elif scriptflag[m][7] == 1:
+                        scriptimage8 = pygame.transform.scale(scriptimage, (x[m*3], x[m*3]))
+                        scriptimage8 = pygame.transform.rotate(scriptimage8, 315)
+                        screen.blit(scriptimage8, (400-x[m*3]*1.8, 400+x[m*3]/2.7))
+                       
+                        if position == 1:
+                            if m == 0:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][7] = 0
+                            elif m == 1:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][7] = 0
+                            elif m == 2:
+                                     if 400+x[m*3] > 525 and 400+x[m*3] < 550:
+                                             score += 100
+                                             script_effect.play()
+                                             scriptflag[m][7] = 0
+        
+             
+        screen.blit(plane_img, (pos_dict['one']))
+        screen.blit(plane_img_two, (pos_dict['two']))
+        screen.blit(plane_img_three, (pos_dict['three']))
+        screen.blit(plane_img_four, (pos_dict['four']))
+        screen.blit(plane_img_five, (pos_dict['five']))
+        screen.blit(plane_img_six, (pos_dict['six']))
+        screen.blit(plane_img_seven, (pos_dict['seven']))
+        screen.blit(plane_img_eight, (pos_dict['eight']))
+
+        score += 1 # update score
+        if score % 100 == 0 and cuberand != 1:  # increase appearence of cubes and scripts
+                cuberand = cuberand - 1
+                scriptrand = scriptrand - 1
+
+        # prints score to screen
+        t = str(score)
+        text = font.render(t, True, (255, 255, 255))
+        screen.blit(text,(650, 10))
+
+        l = str(lives)
+        text = font.render(l, True, (255, 0, 0))
+        screen.blit(text,(150, 10))
+
+        if lives < 1:
+                done = True
+                screen.fill((0, 0, 0))
+                text = font.render("GAME OVER", True, (255, 255, 255))
+                screen.blit(text,(300, 370))
+                score_text = str(score)
+                text_s = font.render(score_text, True, (255, 255, 255))
+                screen.blit(text_s,(300, 450))
+
+        pygame.display.flip()
+        clock.tick(24)
+
+data = input("Enter Your Name")
+
+rfile = open('out.txt', 'r')
+old = rfile.read()
+
+wfile = open('out.txt', 'w')
+wfile.write(old)
+wfile.write(", ")
+wfile.write(data)
+wfile.write(" ")
+wfile.write(str(datetime.date.today()))
+wfile.write(" ")
+wfile.write(str(score))
+wfile.close()
+
+import ftplib
+
+session = ftplib.FTP('teencomputing.com','tej20pcss','Aq123456%')
+file = open('out.txt','rb')                  # file to send
+session.storbinary('STOR out.txt', file)     # send the file
+file.close()                                    # close file and FTP
+session.quit()
